@@ -24,7 +24,8 @@
     "lint": "eslint \"{src,test}/**/*.ts\" --fix",
     "test": "jest --passWithNoTests --noStackTrace --runInBand",
     "test:unit": "npm test -- -c jest.config.unit.js",
-    "test:unit:watch": "npm test -- --watch -c jest.config.unit.js",
+    "test:integration": "npm test -- --watch -c jest.config.integration.js",
+    "test:watch": "npm test -- --watch -c jest.config.unit.js",
     "test:staged": "npm test -- --findRelatedTests",
     "test:ci": "npm test -- --coverage",
     "test:coveralls": "npm run test:ci && coveralls < coverage/lcov.info"
