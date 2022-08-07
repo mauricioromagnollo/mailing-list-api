@@ -13,6 +13,12 @@ export class Email {
       return false;
     }
 
+    const EMAIL_REGEX = /^[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~](\.?[-!#$%&'*+/0-9=?A-Z^_a-z`{|}~])*@[a-zA-Z0-9](-*\.?[a-zA-Z0-9])*\.[a-zA-Z](-?[a-zA-Z0-9])+$/;
+
+    if (!EMAIL_REGEX.test(email)) {
+      return false;
+    }
+
     const [localpart, domain] = email.split('@');
 
     if (localpart.length > this.MAX_EMAIL_LOCALPART_SIZE || localpart.length === 0) {
