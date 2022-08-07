@@ -1,7 +1,7 @@
 import { describe, test, expect } from '@/test/ports';
 import { Email } from '@/entities';
 
-describe('Email validation', () => {
+describe('Email validate', () => {
   test('should not accept null strings', () => {
     const email = null;
     const isValidEmail: boolean = Email.validate(email);
