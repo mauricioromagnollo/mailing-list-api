@@ -62,4 +62,22 @@ describe('Email validation', () => {
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeFalsy();
   });
+
+  test('should not accept localpart with two dots', () => {
+    const email = 'any..email@mail.com';
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
+
+  test('should not accept localpart with ending dot', () => {
+    const email = 'any.@mail.com';
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
+
+  test('should not accept email without an at-sign', () => {
+    const email = 'anymail.com';
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
 });
