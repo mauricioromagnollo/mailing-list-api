@@ -1,0 +1,22 @@
+{
+  "name": "mailing-list-api",
+  "version": "1.0.0",
+  "description": "An open source case study of an API developed using Node.js and TypeScript, using Clean Architecture.",
+  "author": "Maurício Romagnoli <x0n4d0>",
+  "license": "MIT",
+  "main": "index.js",
+  "homepage": "https://github.com/x0n4d0/mailing-list-api#readme",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/x0n4d0/mailing-list-api.git"
+  },
+  "bugs": {
+    "url": "https://github.com/x0n4d0/mailing-list-api/issues"
+  },
+  "keywords": [
+    "nodejs", "typescript", "clean-architecture", "api"
+  ],
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  }
+}
