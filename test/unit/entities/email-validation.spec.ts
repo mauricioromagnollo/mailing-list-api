@@ -20,8 +20,21 @@ describe('Email validation', () => {
     expect(isValidEmail).toBeTruthy();
   });
 
-  test('should not accept localpart larger than 64 chars', () => {
-    const email = `${'l'.repeat(65)}@mail.com`;
+  test(`should not accept strings larger than ${Email.MAX_EMAIL_SIZE} chars`, () => {
+    const email = `${'l'.repeat(64)}@${'d'.repeat(128)}.${'d'.repeat(127)}`;
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
+
+  test(`should not accept domain part larger than ${Email.MAX_EMAIL_DOMAIN_SIZE} chars`, () => {
+    const email = `local@${'d'.repeat(128)}.${'d'.repeat(127)}`;
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
+
+  test(`should not accept localpart larger than ${Email.MAX_EMAIL_LOCALPART_SIZE} chars`, () => {
+    const localpart = 'l'.repeat(Email.MAX_EMAIL_LOCALPART_SIZE + 1);
+    const email = `${localpart}@mail.com`;
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeFalsy();
   });
