@@ -2,6 +2,7 @@ export class Email {
   public static readonly MAX_EMAIL_SIZE = 320;
   public static readonly MAX_EMAIL_LOCALPART_SIZE = 64;
   public static readonly MAX_EMAIL_DOMAIN_SIZE = 255;
+  public static readonly MAX_EMAIL_DOMAIN_PART_SIZE = 63;
 
   static validate(email: string): boolean {
     if (!email) {
@@ -19,6 +20,15 @@ export class Email {
     }
 
     if (domain.length > this.MAX_EMAIL_DOMAIN_SIZE || domain.length === 0) {
+      return false;
+    }
+
+    const domainParts = domain.split('.');
+    const isLargerDomainPart = domainParts.some(
+      (part) => part.length > this.MAX_EMAIL_DOMAIN_PART_SIZE,
+    );
+
+    if (isLargerDomainPart) {
       return false;
     }
 
