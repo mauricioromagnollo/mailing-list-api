@@ -6,12 +6,12 @@
     "esModuleInterop": true,
     "allowJs": true,
     "rootDirs": ["src", "test"],
-    "baseUrl": "src",
+    "baseUrl": "./src",
     "paths": {
       "@/test/*": ["../test/*"],
       "@/*": ["*"]
     }
   },
-  "include": ["src", "tests"],
+  "include": ["src", "test"],
   "exclude": []
 }

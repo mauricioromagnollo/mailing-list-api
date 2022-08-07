@@ -1,6 +1,7 @@
 module.exports = {
   roots: ['<rootDir>/test'],
   coverageDirectory: 'coverage',
+  testEnvironment: 'node',
   collectCoverageFrom: [
     '<rootDir>/src/**/*.ts',
     '!**/test/**',
@@ -10,8 +11,8 @@ module.exports = {
     '.+\\.ts$': 'ts-jest',
   },
   moduleNameMapper: {
-    '^@/(.*)$': '<rootDir>/src/$1',
-    '^@test/(.*)$': '<rootDir>/test/$1',
+    '@/test/(.*)$': '<rootDir>/test/$1',
+    '@/(.*)$': '<rootDir>/src/$1',
   },
   // setupFiles: ['dotenv/config'],
 };
