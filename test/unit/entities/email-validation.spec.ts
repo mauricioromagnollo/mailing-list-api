@@ -19,4 +19,10 @@ describe('Email validation', () => {
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeTruthy();
   });
+
+  test('should not accept localpart larger than 64 chars', () => {
+    const email = `${'l'.repeat(65)}@mail.com`;
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
 });
