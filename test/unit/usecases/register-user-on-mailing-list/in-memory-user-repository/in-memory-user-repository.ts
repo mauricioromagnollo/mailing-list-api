@@ -1,4 +1,5 @@
-import { UserData, UserRepository } from '@/usecases';
+import { UserRepository } from '@/usecases';
+import { UserData } from '@/entities';
 
 export class InMemoryUserRepository implements UserRepository {
   private usersRepository: UserData[];

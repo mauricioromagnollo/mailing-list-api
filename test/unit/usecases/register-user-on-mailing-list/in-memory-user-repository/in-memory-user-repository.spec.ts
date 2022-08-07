@@ -1,8 +1,7 @@
-import { UserRepository } from '../../../../../src/usecases/ports/user-repository';
 import { describe, test, expect } from '@/test/ports';
-
+import { UserRepository } from '@/usecases';
+import { UserData } from '@/entities';
 import { InMemoryUserRepository } from './in-memory-user-repository';
-import { UserData } from '@/usecases';
 
 describe('In memory User repository', () => {
   test('should return null if user is not found', async () => {
