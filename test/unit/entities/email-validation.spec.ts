@@ -44,4 +44,10 @@ describe('Email validation', () => {
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeFalsy();
   });
+
+  test('should not accept empty domain', () => {
+    const email = 'any@';
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
 });
