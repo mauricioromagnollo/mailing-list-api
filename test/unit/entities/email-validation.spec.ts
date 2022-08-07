@@ -56,4 +56,10 @@ describe('Email validation', () => {
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeFalsy();
   });
+
+  test('should not accept localpart with invalid char', () => {
+    const email = 'any email@mail.com';
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
 });
