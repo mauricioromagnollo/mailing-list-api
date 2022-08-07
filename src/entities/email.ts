@@ -18,7 +18,7 @@ export class Email {
       return false;
     }
 
-    if (domain.length > this.MAX_EMAIL_DOMAIN_SIZE) {
+    if (domain.length > this.MAX_EMAIL_DOMAIN_SIZE || domain.length === 0) {
       return false;
     }
 
