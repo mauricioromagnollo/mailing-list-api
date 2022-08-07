@@ -4,6 +4,12 @@ export class Email {
       return false;
     }
 
+    const [localpart] = email.split('@');
+
+    if (localpart.length > 64) {
+      return false;
+    }
+
     return true;
   }
 }
