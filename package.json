@@ -14,9 +14,16 @@
     "url": "https://github.com/x0n4d0/mailing-list-api/issues"
   },
   "keywords": [
-    "nodejs", "typescript", "clean-architecture", "api"
+    "nodejs",
+    "typescript",
+    "clean-architecture",
+    "api"
   ],
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "devDependencies": {
+    "@types/node": "^18.6.4",
+    "typescript": "^4.7.4"
   }
 }
