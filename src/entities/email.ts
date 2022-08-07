@@ -14,7 +14,7 @@ export class Email {
 
     const [localpart, domain] = email.split('@');
 
-    if (localpart.length > this.MAX_EMAIL_LOCALPART_SIZE) {
+    if (localpart.length > this.MAX_EMAIL_LOCALPART_SIZE || localpart.length === 0) {
       return false;
     }
 
