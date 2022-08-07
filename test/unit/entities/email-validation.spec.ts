@@ -50,4 +50,10 @@ describe('Email validation', () => {
     const isValidEmail: boolean = Email.validate(email);
     expect(isValidEmail).toBeFalsy();
   });
+
+  test(`should not accept domain with a part larger than ${Email.MAX_EMAIL_DOMAIN_PART_SIZE} chars`, () => {
+    const email = `any@${'d'.repeat(64)}.com`;
+    const isValidEmail: boolean = Email.validate(email);
+    expect(isValidEmail).toBeFalsy();
+  });
 });
