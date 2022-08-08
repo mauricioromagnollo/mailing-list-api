@@ -1,8 +1,25 @@
+import { Either, left, right } from '@/shared';
+import { InvalidEmailError } from '@/entities/errors';
+
 export class Email {
   public static readonly MAX_EMAIL_SIZE = 320;
   public static readonly MAX_EMAIL_LOCALPART_SIZE = 64;
   public static readonly MAX_EMAIL_DOMAIN_SIZE = 255;
   public static readonly MAX_EMAIL_DOMAIN_PART_SIZE = 63;
+
+  private readonly email: string;
+
+  private constructor(email: string) {
+    this.email = email;
+  }
+
+  static create(email: string): Either<InvalidEmailError, Email> {
+    if (this.validate(email)) {
+      return right(new Email(email));
+    }
+
+    return left(new InvalidEmailError());
+  }
 
   static validate(email: string): boolean {
     if (!email) {
