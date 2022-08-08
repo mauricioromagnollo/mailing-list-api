@@ -1,10 +1,9 @@
 {
   "name": "mailing-list-api",
   "version": "1.0.0",
-  "description": "An open source case study of an API developed using Node.js and TypeScript, using Clean Architecture.",
+  "description": "An open source mailing list API developed with Node.js and TypeScript, using Clean Architecture.",
   "author": "Maurício Romagnoli <x0n4d0>",
   "license": "MIT",
-  "main": "index.js",
   "homepage": "https://github.com/x0n4d0/mailing-list-api#readme",
   "repository": {
     "type": "git",
