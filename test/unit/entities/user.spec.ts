@@ -13,7 +13,13 @@ describe('User (Domain Entity)', () => {
   });
 
   test('should not create user with invalid name (too few characteres)', () => {
-    const invalidName = 'O      ';
+    const invalidName = 'O';
+    const error = User.create({ name: invalidName, email: 'any@email.com' });
+    expect(error).toEqual(left(new InvalidNameError()));
+  });
+
+  test('should not create user with invalid name (too few characteres - not consider empty char)', () => {
+    const invalidName = ' O      ';
     const error = User.create({ name: invalidName, email: 'any@email.com' });
     expect(error).toEqual(left(new InvalidNameError()));
   });
