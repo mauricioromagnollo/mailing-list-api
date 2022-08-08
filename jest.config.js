@@ -6,6 +6,8 @@ module.exports = {
     '<rootDir>/src/**/*.ts',
     '!**/test/**',
     '!**/config/**',
+    '!**/**/index.ts',
+    '!<rootDir>/src/shared/*.ts',
   ],
   transform: {
     '.+\\.ts$': 'ts-jest',
