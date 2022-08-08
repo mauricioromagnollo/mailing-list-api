@@ -57,4 +57,8 @@ export class Email {
 
     return true;
   }
+
+  get value(): string {
+    return this.email;
+  }
 }

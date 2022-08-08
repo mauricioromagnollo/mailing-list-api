@@ -1,16 +1,33 @@
 import { Either, left, right } from '@/shared';
-import { InvalidEmailError } from '@/entities';
+import { InvalidEmailError, InvalidNameError, Name } from '@/entities';
 import { UserData } from './user-data';
 import { Email } from './email';
 
 export class User {
-  static create(userData: UserData): Either<InvalidEmailError, User> {
+  public readonly name: Name;
+  public readonly email: Email;
+
+  constructor(name: Name, email: Email) {
+    this.name = name;
+    this.email = email;
+  }
+
+  static create(userData: UserData): Either<InvalidNameError | InvalidEmailError, User> {
+    const nameOrError = Name.create(userData.name);
+
+    if (nameOrError.isLeft()) {
+      return left(new InvalidNameError());
+    }
+
     const emailOrError = Email.create(userData.email);
 
     if (emailOrError.isLeft()) {
       return left(new InvalidEmailError());
     }
 
-    return right(emailOrError);
+    const name: Name = nameOrError.value as Name;
+    const email: Email = emailOrError.value as Email;
+
+    return right(new User(name, email));
   }
 }
