@@ -68,12 +68,12 @@ describe('Register User Controller', () => {
 
   test('should return status code 400 when request is missing param name on body', async () => {
     const sut = makeSut();
-    const requestWithInvalidEmail: HttpRequest = {
+    const requestWithMissingNameInBody: HttpRequest = {
       body: {
         email: 'any@mail.com',
       },
     };
-    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    const response: HttpResponse = await sut.handle(requestWithMissingNameInBody);
     expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
     expect(response.body).toBeInstanceOf(MissingParamError);
     expect((response.body as Error).message).toEqual('Missing param from request: name.');
@@ -81,12 +81,12 @@ describe('Register User Controller', () => {
 
   test('should return status code 400 when request is missing param email on body', async () => {
     const sut = makeSut();
-    const requestWithInvalidEmail: HttpRequest = {
+    const requestWithMissingEmailInBody: HttpRequest = {
       body: {
         name: 'Any Name',
       },
     };
-    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    const response: HttpResponse = await sut.handle(requestWithMissingEmailInBody);
     expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
     expect(response.body).toBeInstanceOf(MissingParamError);
     expect((response.body as Error).message).toEqual('Missing param from request: email.');
@@ -94,10 +94,10 @@ describe('Register User Controller', () => {
 
   test('should return status code 400 when request is missing name and email on body', async () => {
     const sut = makeSut();
-    const requestWithInvalidEmail: HttpRequest = {
+    const requestWithEmptyBody: HttpRequest = {
       body: { },
     };
-    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    const response: HttpResponse = await sut.handle(requestWithEmptyBody);
     expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
     expect(response.body).toBeInstanceOf(MissingParamError);
     expect((response.body as Error).message).toEqual('Missing param from request: name email.');
