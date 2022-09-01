@@ -1,3 +1,4 @@
+import { MissingParamError } from '@/controllers/errors';
 import { HttpRequest, HttpResponse } from '@/controllers/ports';
 import { UserData } from '@/entities';
 import { RegisterUserOnMailingList } from '@/usecases';
@@ -11,6 +12,17 @@ export class RegisterUserController {
   }
 
   public async handle(request: HttpRequest): Promise<HttpResponse> {
+    const { name, email } = request.body;
+
+    if (!name && !email) {
+      return badRequest(new MissingParamError('name email'));
+    }
+
+    if (!name || !email) {
+      const missingParam = !name ? 'name' : 'email';
+      return badRequest(new MissingParamError(missingParam));
+    }
+
     const userData: UserData = request.body;
     const registerUserOnMailingList = await this.usecase.registerUserOnMailingList(userData);
     let httpResponse: HttpResponse;
