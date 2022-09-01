@@ -1,12 +1,16 @@
 import { describe, test, expect } from '@/test/ports';
 import { InMemoryUserRepository } from '@/test/doubles/fakes';
+import { ErrorThrowUseCaseStub } from '@/test/doubles/stubs/error-throw-use-case';
+
+import { RegisterUserController } from '@/controllers';
 import { HttpRequest, HttpResponse } from '@/controllers/ports';
 import { MissingParamError } from '@/controllers/errors';
-import { RegisterUserOnMailingList } from '@/usecases';
-import { UserRepository } from '@/usecases/ports';
-import { UserData } from '@/entities';
-import { RegisterUserController } from '@/controllers';
 import { HTTP_STATUS_CODE } from '@/controllers/helpers';
+
+import { RegisterUserOnMailingList } from '@/usecases';
+import { UserRepository, UseCase } from '@/usecases/ports';
+
+import { UserData } from '@/entities';
 import { InvalidEmailError, InvalidNameError } from '@/entities/errors';
 
 type SutType = RegisterUserController;
@@ -14,8 +18,7 @@ type SutType = RegisterUserController;
 const makeRegisterUserOnMailingList = (): RegisterUserOnMailingList => {
   const users: UserData[] = [];
   const userRepository: UserRepository = new InMemoryUserRepository(users);
-  const registerUserOnMailingList = new RegisterUserOnMailingList(userRepository);
-  return registerUserOnMailingList;
+  return new RegisterUserOnMailingList(userRepository);
 };
 
 const makeSut = (): SutType => {
@@ -98,5 +101,19 @@ describe('Register User Controller', () => {
     expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
     expect(response.body).toBeInstanceOf(MissingParamError);
     expect((response.body as Error).message).toEqual('Missing param from request: name email.');
+  });
+
+  test('should return status code 500 when server raises', async () => {
+    const errorThrowUseCaseStub: UseCase = new ErrorThrowUseCaseStub();
+    const sut = new RegisterUserController(errorThrowUseCaseStub);
+    const request: HttpRequest = {
+      body: {
+        name: 'Any Name',
+        email: 'any@mail.com',
+      },
+    };
+    const response: HttpResponse = await sut.handle(request);
+    expect(response.statusCode).toEqual(HTTP_STATUS_CODE.INTERNAL_SERVER_ERROR);
+    expect(response.body).toBeInstanceOf(Error);
   });
 });
