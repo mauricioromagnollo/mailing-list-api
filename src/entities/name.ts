@@ -17,7 +17,7 @@ export class Name {
   }
 
   static validate(name: string): boolean {
-    if (name.trim().length < 2 || name.trim().length > 256) {
+    if (!name || name.trim().length < 2 || name.trim().length > 256) {
       return false;
     }
 
