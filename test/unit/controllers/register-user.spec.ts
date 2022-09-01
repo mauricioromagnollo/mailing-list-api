@@ -1,6 +1,7 @@
 import { describe, test, expect } from '@/test/ports';
 import { InMemoryUserRepository } from '@/test/doubles/fakes';
 import { HttpRequest, HttpResponse } from '@/controllers/ports';
+import { MissingParamError } from '@/controllers/errors';
 import { RegisterUserOnMailingList } from '@/usecases';
 import { UserRepository } from '@/usecases/ports';
 import { UserData } from '@/entities';
@@ -49,7 +50,7 @@ describe('Register User Controller', () => {
     expect(response.body).toBeInstanceOf(InvalidNameError);
   });
 
-  test('should return status code 400 when request contains invalid name', async () => {
+  test('should return status code 400 when request contains invalid email', async () => {
     const sut = makeSut();
     const requestWithInvalidEmail: HttpRequest = {
       body: {
@@ -60,5 +61,42 @@ describe('Register User Controller', () => {
     const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
     expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
     expect(response.body).toBeInstanceOf(InvalidEmailError);
+  });
+
+  test('should return status code 400 when request is missing param name on body', async () => {
+    const sut = makeSut();
+    const requestWithInvalidEmail: HttpRequest = {
+      body: {
+        email: 'any@mail.com',
+      },
+    };
+    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
+    expect(response.body).toBeInstanceOf(MissingParamError);
+    expect((response.body as Error).message).toEqual('Missing param from request: name.');
+  });
+
+  test('should return status code 400 when request is missing param email on body', async () => {
+    const sut = makeSut();
+    const requestWithInvalidEmail: HttpRequest = {
+      body: {
+        name: 'Any Name',
+      },
+    };
+    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
+    expect(response.body).toBeInstanceOf(MissingParamError);
+    expect((response.body as Error).message).toEqual('Missing param from request: email.');
+  });
+
+  test('should return status code 400 when request is missing name and email on body', async () => {
+    const sut = makeSut();
+    const requestWithInvalidEmail: HttpRequest = {
+      body: { },
+    };
+    const response: HttpResponse = await sut.handle(requestWithInvalidEmail);
+    expect(response.statusCode).toEqual(HTTP_STATUS_CODE.BAD_REQUEST);
+    expect(response.body).toBeInstanceOf(MissingParamError);
+    expect((response.body as Error).message).toEqual('Missing param from request: name email.');
   });
 });
