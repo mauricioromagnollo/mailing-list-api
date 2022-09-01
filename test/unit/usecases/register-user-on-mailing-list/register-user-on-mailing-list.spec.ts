@@ -1,6 +1,7 @@
 import { describe, test, expect } from '@/test/ports';
 import { InMemoryUserRepository } from '@/test/doubles/fakes';
-import { UserRepository, RegisterUserOnMailingList } from '@/usecases';
+import { RegisterUserOnMailingList } from '@/usecases';
+import { UserRepository } from '@/usecases/ports';
 import { UserData } from '@/entities';
 
 describe('Register user on mailing list use case', () => {

@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@/test/ports';
-import { UserRepository } from '@/usecases';
+import { UserRepository } from '@/usecases/ports';
 import { UserData } from '@/entities';
 import { InMemoryUserRepository } from './in-memory-user-repository';
 
