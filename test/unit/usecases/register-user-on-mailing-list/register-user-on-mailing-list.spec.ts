@@ -4,26 +4,37 @@ import { RegisterUserOnMailingList } from '@/usecases';
 import { UserRepository } from '@/usecases/ports';
 import { UserData } from '@/entities';
 
+type SutType = {
+  sut: RegisterUserOnMailingList;
+  userRepository: UserRepository;
+}
+
+const makeSut = (): SutType => {
+  const users: UserData[] = [];
+  const userRepository: UserRepository = new InMemoryUserRepository(users);
+  const sut: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
+  return {
+    sut,
+    userRepository,
+  };
+};
+
 describe('Register user on mailing list use case', () => {
   test('should add user with complete data to mailing list', async () => {
-    const users: UserData[] = [];
-    const userRepository: UserRepository = new InMemoryUserRepository(users);
-    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
+    const { sut, userRepository } = makeSut();
     const name = 'any_name';
     const email = 'any@email.com';
-    const response = await usecase.registerUserOnMailingList({ name, email });
+    const response = await sut.registerUserOnMailingList({ name, email });
     const user = await userRepository.findUserByEmail(email);
     expect(user.name).toBe(name);
     expect(response.value.name).toBe(name);
   });
 
   test('should not add user with invalid email to mailing list ', async () => {
-    const users: UserData[] = [];
-    const userRepository: UserRepository = new InMemoryUserRepository(users);
-    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
+    const { sut, userRepository } = makeSut();
     const name = 'any_name';
     const invalidEmail = 'invalid_email';
-    const response = (await usecase.registerUserOnMailingList({
+    const response = (await sut.registerUserOnMailingList({
       name,
       email: invalidEmail,
     })).value as Error;
@@ -34,12 +45,10 @@ describe('Register user on mailing list use case', () => {
   });
 
   test('should not add user with invalid name to mailing list ', async () => {
-    const users: UserData[] = [];
-    const userRepository: UserRepository = new InMemoryUserRepository(users);
-    const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
+    const { sut, userRepository } = makeSut();
     const invalidName = '';
     const email = 'any@email.com';
-    const response = (await usecase.registerUserOnMailingList({
+    const response = (await sut.registerUserOnMailingList({
       name: invalidName,
       email,
     })).value as Error;
