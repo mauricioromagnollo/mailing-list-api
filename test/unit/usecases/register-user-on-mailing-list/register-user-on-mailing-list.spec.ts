@@ -1,10 +1,7 @@
 import { describe, test, expect } from '@/test/ports';
+import { InMemoryUserRepository } from '@/test/doubles/fakes';
 import { UserRepository, RegisterUserOnMailingList } from '@/usecases';
 import { UserData } from '@/entities';
-import { left } from '@/shared';
-import { InvalidEmailError, InvalidNameError } from '@/entities/errors';
-
-import { InMemoryUserRepository } from '@/test/doubles/fakes';
 
 describe('Register user on mailing list use case', () => {
   test('should add user with complete data to mailing list', async () => {
@@ -25,10 +22,14 @@ describe('Register user on mailing list use case', () => {
     const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
     const name = 'any_name';
     const invalidEmail = 'invalid_email';
-    const response = await usecase.registerUserOnMailingList({ name, email: invalidEmail });
+    const response = (await usecase.registerUserOnMailingList({
+      name,
+      email: invalidEmail,
+    })).value as Error;
     const user = await userRepository.findUserByEmail(invalidEmail);
     expect(user).toBeNull();
-    expect(response).toEqual(left(new InvalidEmailError()));
+    expect(response.name).toEqual('InvalidEmailError');
+    expect(response.message).toEqual(`Invalid email: ${invalidEmail}.`);
   });
 
   test('should not add user with invalid name to mailing list ', async () => {
@@ -37,9 +38,13 @@ describe('Register user on mailing list use case', () => {
     const usecase: RegisterUserOnMailingList = new RegisterUserOnMailingList(userRepository);
     const invalidName = '';
     const email = 'any@email.com';
-    const response = await usecase.registerUserOnMailingList({ name: invalidName, email });
+    const response = (await usecase.registerUserOnMailingList({
+      name: invalidName,
+      email,
+    })).value as Error;
     const user = await userRepository.findUserByEmail(email);
     expect(user).toBeNull();
-    expect(response).toEqual(left(new InvalidNameError()));
+    expect(response.name).toEqual('InvalidNameError');
+    expect(response.message).toEqual(`Invalid name: ${invalidName}.`);
   });
 });
