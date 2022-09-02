@@ -1,3 +1,3 @@
-export type HttpRequest = {
-  body: any;
+export type HttpRequest<T = any> = {
+  body: T;
 }
