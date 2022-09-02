@@ -1,10 +1,14 @@
-FROM node:18.7.0
+FROM node:18.7.0-slim
 
-RUN apk add --no-cache bash
-RUN apt-get update -qq
-RUN apt-get install -y build-essential
-RUN apt-get install -y git
+RUN apt-get update \
+  && apt-get install -y curl git build-essential
 
 USER node
 
 WORKDIR /home/node/app
+
+COPY package.json package-lock.json /home/node/app/
+
+RUN npm ci --silent
+
+COPY . .
