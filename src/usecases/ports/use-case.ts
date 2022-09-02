@@ -1,3 +1,3 @@
 export interface UseCase {
-  perform (T?: any): Promise<any>;
+  perform <T = any>(T?: T): Promise<T>;
 }
