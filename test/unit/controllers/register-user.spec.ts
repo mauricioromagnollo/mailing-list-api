@@ -10,8 +10,8 @@ import { HTTP_STATUS_CODE } from '@/controllers/helpers';
 import { RegisterUserOnMailingList } from '@/usecases';
 import { UserRepository, UseCase } from '@/usecases/ports';
 
-import { UserData } from '@/entities';
-import { InvalidEmailError, InvalidNameError } from '@/entities/errors';
+import { UserData } from '@/domain/entities';
+import { InvalidEmailError, InvalidNameError } from '@/domain/errors';
 
 type SutType = RegisterUserController;
 

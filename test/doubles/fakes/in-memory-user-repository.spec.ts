@@ -1,6 +1,6 @@
 import { describe, test, expect } from '@/test/ports';
 import { UserRepository } from '@/usecases/ports';
-import { UserData } from '@/entities';
+import { UserData } from '@/domain/entities';
 import { InMemoryUserRepository } from './in-memory-user-repository';
 
 describe('In memory User repository', () => {

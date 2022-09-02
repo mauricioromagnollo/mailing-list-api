@@ -2,7 +2,7 @@ import { describe, test, expect } from '@/test/ports';
 import { InMemoryUserRepository } from '@/test/doubles/fakes';
 import { RegisterUserOnMailingList } from '@/usecases';
 import { UserRepository } from '@/usecases/ports';
-import { UserData } from '@/entities';
+import { UserData } from '@/domain/entities';
 
 type SutType = {
   sut: RegisterUserOnMailingList;

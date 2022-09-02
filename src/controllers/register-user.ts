@@ -1,7 +1,7 @@
 import { UseCase } from '@/usecases/ports';
 import { MissingParamError } from '@/controllers/errors';
 import { HttpRequest, HttpResponse } from '@/controllers/ports';
-import { UserData } from '@/entities';
+import { UserData } from '@/domain/entities';
 import { created, badRequest, internalServerError } from '@/controllers/helpers';
 
 export class RegisterUserController {

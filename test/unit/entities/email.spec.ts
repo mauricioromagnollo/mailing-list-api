@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@/test/ports';
-import { Email } from '@/entities';
+import { Email } from '@/domain/entities';
 
 describe('Email validate', () => {
   test('should not accept null strings', () => {

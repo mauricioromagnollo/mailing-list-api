@@ -1,5 +1,5 @@
 import { describe, test, expect } from '@/test/ports';
-import { Name } from '@/entities';
+import { Name } from '@/domain/entities';
 
 describe('Name validate', () => {
   test('should not accept null name', () => {

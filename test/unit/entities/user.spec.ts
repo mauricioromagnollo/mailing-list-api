@@ -1,5 +1,5 @@
 import { describe, test } from '@/test/ports';
-import { User } from '@/entities';
+import { User } from '@/domain/entities';
 
 describe('User (Domain Entity)', () => {
   test('should not create user with invalid e-mail adress', () => {
