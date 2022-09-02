@@ -1,10 +1,10 @@
 import { UseCase } from '@/usecases/ports';
+import { Controller, HttpRequest, HttpResponse } from '@/controllers/ports';
 import { MissingParamError } from '@/controllers/errors';
-import { HttpRequest, HttpResponse } from '@/controllers/ports';
 import { UserData } from '@/domain/entities';
 import { created, badRequest, internalServerError } from '@/controllers/helpers';
 
-export class RegisterUserController {
+export class RegisterUserController implements Controller {
   private readonly registerUserOnMailingList: UseCase;
 
   constructor(usecase: UseCase) {
@@ -25,18 +25,13 @@ export class RegisterUserController {
       }
 
       const userData: UserData = request.body;
-      const registerUserOnMailingList = await this.registerUserOnMailingList.perform(userData);
-      let httpResponse: HttpResponse;
+      const response = await this.registerUserOnMailingList.perform(userData);
 
-      if (registerUserOnMailingList.isLeft()) {
-        httpResponse = badRequest(registerUserOnMailingList.value);
+      if (response.isLeft()) {
+        return badRequest(response.value);
       }
 
-      if (registerUserOnMailingList.isRight()) {
-        httpResponse = created(registerUserOnMailingList.value);
-      }
-
-      return httpResponse;
+      return created(response.value);
     } catch (error) {
       return internalServerError(error);
     }
