@@ -1,0 +1,13 @@
+version: '3'
+
+services:
+  app:
+    build: .
+    entrypoint: ./.docker/entrypoint.sh
+    container_name: mailing_list_api_app
+    ports:
+      - '${PORT}:${PORT}'
+    volumes:
+      - .:/home/node/app
+      - ./node_modules:/home/node/app/node_modules
+    tty: true
