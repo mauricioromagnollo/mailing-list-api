@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/x0n4d0/mailing-list-api/badge.svg?branch=master)](https://coveralls.io/github/x0n4d0/mailing-list-api?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/x0n4d0/mailing-list-api/badge.svg?branch=master)](https://coveralls.io/github/x0n4d0/mailing-list-api)
 
 ![COVER](./docs/img/cover.png)
 
